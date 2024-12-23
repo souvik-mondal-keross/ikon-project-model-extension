@@ -52,6 +52,7 @@
   "dependencies": {
     "@types/diff": "^6.0.0",
     "diff": "^7.0.0",
-    "ikonextension": "file:"
+    "ikonextension": "file:",
+    "vsce": "^2.15.0"
   }
 }
