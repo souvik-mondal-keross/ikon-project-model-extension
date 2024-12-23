@@ -1,0 +1,19 @@
+#ProcessModellerDiv {
+    background-color: var(--vscode-editor-background);
+    
+}
+
+#processModellerPalletteDiv {
+    background-color: var(--vscode-editor-background);
+    width: 5%;
+
+}
+
+#processModellerDiagramDiv {
+    width: 85%;
+}
+
+#processModellerToolDiv{
+    width: 9%;
+}
+

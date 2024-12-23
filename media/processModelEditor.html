@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100 w-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,90 +12,78 @@
     <script src="https://cdn.jsdelivr.net/npm/gojs@3.0.14/release/go.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/create-gojs-kit@3.0.14/dist/extensions/LinkLabelDraggingTool.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/uuid@11.0.3/dist/cjs-browser/index.min.js"></script>
+    <link rel="stylesheet" href="${extensionStyleSheet}">
 
     
 </head>
-<body>
-    <div class="row wrapper wrapper-content animated fadeInRight">
-        <div class="col-lg-12">
-            <div class="ibox">
-                <div class="ibox-content model-content" style="display: flex; justify-content: space-between; margin-top: 4px" id="ProcessModellerDiv">
-                    <div class="sk-spinner sk-spinner-wave">
-                        <div class="sk-rect1"></div>
-                        <div class="sk-rect2"></div>
-                        <div class="sk-rect3"></div>
-                        <div class="sk-rect4"></div>
-                        <div class="sk-rect5"></div>
-                    </div>
-                    <div id="processModellerPalletteDiv" class="ms-1" style="width: 64px; margin-right: 2px; background-color: whitesmoke; border: solid 1px black"></div>
-                    <div id="processModellerDiagramDiv" style="flex-grow: 1; border: solid 1px black"></div>
-                    <div id="processModellerToolDiv" class="me-1" style="border: solid 1px black;width:120px; margin-left: 2px; text-align: center">
-                        <div class="row" style="margin-top: 3px">
-                            <div class="col-sm-12" >
-                                <button type="button" class="btn btn-info btn-xs" style="width: 110px" onclick="ProcessModeller.togglePorts()"><i id="btnTogglePorts" class="bi bi-toggle-off"></i>&nbsp;Toggle Ports</button>
-                            </div>
-                            <div class="col-sm-12">
-                                <hr class="hr-line-solid">
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px">
-                                <button class="btn btn-primary btn-xs" style="width: 110px" onclick="ProcessModeller.saveProcessModel()" id="btnSaveModel"><i class="fa fa-save"></i>  Save</button>
-                            </div>
-                            <div class="col-sm-12" >
-                                <!-- <button class="btn btn-primary btn-xs" style="width: 110px" onclick="ProcessModeller.deployProcess()" id="btnDeployProcess"><i class="fa fa-send"></i>  Deploy</button> -->
-                                <button class="btn btn-primary btn-xs" style="width: 110px" onclick="ProcessModeller.triggerFileInput()" id="btnUploadModel">Upload</button>
-                                <!-- Hidden file input for uploading JSON data -->
-                                <input type="file" id="uploadInput" class="d-none" accept=".txt" onchange="ProcessModeller.uploadProcessData(event)">
-                            </div>
-                            <div class="col-sm-12">
-                                <hr class="hr-line-solid">
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px" onclick="ProcessModeller.navigateToFormsPage()">
-                                <button class="btn btn-primary btn-xs" style="width: 110px"><i class="fa fa-building-o"></i>  Forms</button>
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px" onclick="ProcessModeller.navigateToScriptsPage()">
-                                <button class="btn btn-primary btn-xs" style="width: 110px"><i class="fa fa-cog"></i>  Scripts</button>
-                            </div>
-                            <div class="col-sm-12">
-                                <hr class="hr-line-solid">
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px">
-                                <button class="btn btn-primary btn-xs" style="width: 110px" id="btnTaskAssignment" disabled onclick="ProcessModeller.openTaskAssignmentForm()"><i class="fa fa-users"></i>  Assignment</button>
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px">
-                                <button class="btn btn-primary btn-xs" style="width: 110px" id="btnFormAssociation" disabled onclick="ProcessModeller.openFormAssociationForm()"><i class="fa fa-tags"></i>  Form/Script</button>
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px">
-                                <button class="btn btn-primary btn-xs" style="width: 110px" id="btnActionConfiguration" disabled onclick="ProcessModeller.openActionDefinitionForm()"><i class="fa fa-bolt"></i>  Action</button>
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px">
-                                <button class="btn btn-primary btn-xs" style="width: 110px" id="btnNotificationConfiguration" disabled onclick="ProcessModeller.openNotificationDefinitionForm()"><i class="fa fa-envelope-o"></i>  Notification</button>
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px">
-                                <button class="btn btn-primary btn-xs" style="width: 110px" id="btnConditionConfiguration" disabled onclick="ProcessModeller.openConditionDefinitionForm()"><i class="fa fa-arrows"></i>  Condition</button>
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px;display: none">
-                                <button class="btn btn-primary btn-xs" style="width: 110px" id="btnReminderConfiguration" disabled><i class="fa fa-envelope"></i>  Reminder</button>
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px">
-                                <button class="btn btn-primary btn-xs" style="width: 110px" id="btnJobConfiguration" disabled onclick="ProcessModeller.openJobDefinitionForm()"><i class="fa fa-wrench"></i>  Job</button>
-                            </div>
-                            <div class="col-sm-12">
-                                <hr class="hr-line-solid">
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px">
-                                <button class="btn btn-warning btn-xs" style="width: 110px" id="btnRequestLock" style="display: none" onclick="ProcessModeller.requestLock()"><i class="fa fa-lock"></i>  Request Lock</button>
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px">
-                                <button class="btn btn-warning btn-xs" style="width: 110px" id="btnRequestUnlock" style="display:none" onclick="ProcessModeller.unlock()"><i class="fa fa-unlock-alt"></i>  Unlock</button>
-                            </div>
-                            <div class="col-sm-12">
-                                <hr class="hr-line-solid">
-                            </div>
-                            <div class="col-sm-12" style="margin-bottom: 3px">
-                                <button class="btn btn-warning btn-xs" style="width: 110px" id="btnCreateRevision" style="display:none" onclick="ProcessModeller.openRevisionForm()"><i class="fa fa-history"></i>  Create Revision</button>
-                            </div>
-                        </div>
-                    </div>
+<body class="p-0 m-0 w-100 h-100">
+    <div class="h-100 w-100 d-flex" id="ProcessModellerDiv">
+        <div class="" id="processModellerPalletteDiv"></div>
+        <div class="" id="processModellerDiagramDiv"></div>
+        <div class="" id="processModellerToolDiv">
+            <div class="row " >
+                <div class="col-sm-12" >
+                    <button type="button" class="btn btn-info btn-xs" style="width: 110px" onclick="ProcessModeller.togglePorts()"><i id="btnTogglePorts" class="bi bi-toggle-off"></i>&nbsp;Toggle Ports</button>
+                </div>
+                <div class="col-sm-12">
+                    <hr class="hr-line-solid">
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px">
+                    <button class="btn btn-primary btn-xs" style="width: 110px" onclick="ProcessModeller.saveProcessModel()" id="btnSaveModel"><i class="fa fa-save"></i>  Save</button>
+                </div>
+                <div class="col-sm-12" >
+                    <!-- <button class="btn btn-primary btn-xs" style="width: 110px" onclick="ProcessModeller.deployProcess()" id="btnDeployProcess"><i class="fa fa-send"></i>  Deploy</button> -->
+                    <button class="btn btn-primary btn-xs" style="width: 110px" onclick="ProcessModeller.triggerFileInput()" id="btnUploadModel">Upload</button>
+                    <!-- Hidden file input for uploading JSON data -->
+                    <input type="file" id="uploadInput" class="d-none" accept=".txt" onchange="ProcessModeller.uploadProcessData(event)">
+                </div>
+                <div class="col-sm-12">
+                    <hr class="hr-line-solid">
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px" onclick="ProcessModeller.navigateToFormsPage()">
+                    <button class="btn btn-primary btn-xs" style="width: 110px"><i class="fa fa-building-o"></i>  Forms</button>
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px" onclick="ProcessModeller.navigateToScriptsPage()">
+                    <button class="btn btn-primary btn-xs" style="width: 110px"><i class="fa fa-cog"></i>  Scripts</button>
+                </div>
+                <div class="col-sm-12">
+                    <hr class="hr-line-solid">
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px">
+                    <button class="btn btn-primary btn-xs" style="width: 110px" id="btnTaskAssignment" disabled onclick="ProcessModeller.openTaskAssignmentForm()"><i class="fa fa-users"></i>  Assignment</button>
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px">
+                    <button class="btn btn-primary btn-xs" style="width: 110px" id="btnFormAssociation" disabled onclick="ProcessModeller.openFormAssociationForm()"><i class="fa fa-tags"></i>  Form/Script</button>
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px">
+                    <button class="btn btn-primary btn-xs" style="width: 110px" id="btnActionConfiguration" disabled onclick="ProcessModeller.openActionDefinitionForm()"><i class="fa fa-bolt"></i>  Action</button>
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px">
+                    <button class="btn btn-primary btn-xs" style="width: 110px" id="btnNotificationConfiguration" disabled onclick="ProcessModeller.openNotificationDefinitionForm()"><i class="fa fa-envelope-o"></i>  Notification</button>
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px">
+                    <button class="btn btn-primary btn-xs" style="width: 110px" id="btnConditionConfiguration" disabled onclick="ProcessModeller.openConditionDefinitionForm()"><i class="fa fa-arrows"></i>  Condition</button>
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px;display: none">
+                    <button class="btn btn-primary btn-xs" style="width: 110px" id="btnReminderConfiguration" disabled><i class="fa fa-envelope"></i>  Reminder</button>
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px">
+                    <button class="btn btn-primary btn-xs" style="width: 110px" id="btnJobConfiguration" disabled onclick="ProcessModeller.openJobDefinitionForm()"><i class="fa fa-wrench"></i>  Job</button>
+                </div>
+                <div class="col-sm-12">
+                    <hr class="hr-line-solid">
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px">
+                    <button class="btn btn-warning btn-xs" style="width: 110px" id="btnRequestLock" style="display: none" onclick="ProcessModeller.requestLock()"><i class="fa fa-lock"></i>  Request Lock</button>
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px">
+                    <button class="btn btn-warning btn-xs" style="width: 110px" id="btnRequestUnlock" style="display:none" onclick="ProcessModeller.unlock()"><i class="fa fa-unlock-alt"></i>  Unlock</button>
+                </div>
+                <div class="col-sm-12">
+                    <hr class="hr-line-solid">
+                </div>
+                <div class="col-sm-12" style="margin-bottom: 3px">
+                    <button class="btn btn-warning btn-xs" style="width: 110px" id="btnCreateRevision" style="display:none" onclick="ProcessModeller.openRevisionForm()"><i class="fa fa-history"></i>  Create Revision</button>
                 </div>
             </div>
         </div>

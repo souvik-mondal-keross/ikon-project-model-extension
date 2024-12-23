@@ -84,7 +84,10 @@ export class JsonCustomEditor implements vscode.CustomTextEditorProvider {
         const helperScriptUri = webview.asWebviewUri(
             vscode.Uri.joinPath(this.context.extensionUri, 'media', 'modelEditorHelpers.js')
         );
-
+        
+        const extensionStyleSheetUri = webview.asWebviewUri(
+            vscode.Uri.joinPath(this.context.extensionUri, 'media', 'extensionStyleSheet.css')
+        );
         // Load the HTML file dynamically from the media folder
         const htmlFilePath = vscode.Uri.file(
             path.join(this.context.extensionPath, 'media', 'processModelEditor.html')
@@ -94,7 +97,8 @@ export class JsonCustomEditor implements vscode.CustomTextEditorProvider {
         const htmlContent = fs.readFileSync(htmlFilePath.fsPath, 'utf8');
         const finalHtmlContent = htmlContent
             .replace('${editorScriptUri}', editorScriptUri.toString())
-            .replace('${helperScriptUri}', helperScriptUri.toString());
+            .replace('${helperScriptUri}', helperScriptUri.toString())
+            .replace('${extensionStyleSheet}', extensionStyleSheetUri.toString());
 
         return finalHtmlContent;
 
