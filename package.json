@@ -1,10 +1,11 @@
 {
   "name": "ikonextension",
   "displayName": "ikonExtension",
+  "publisher": "keross",
   "description": "",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.96.0"
+    "vscode": "^1.95.0"
   },
   "categories": [
     "Other"
@@ -41,7 +42,7 @@
   "devDependencies": {
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
-    "@types/vscode": "^1.96.0",
+    "@types/vscode": "^1.95.0",
     "@typescript-eslint/eslint-plugin": "^8.3.0",
     "@typescript-eslint/parser": "^8.3.0",
     "@vscode/test-cli": "^0.0.10",
