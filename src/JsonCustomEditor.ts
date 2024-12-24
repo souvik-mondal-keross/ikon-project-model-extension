@@ -59,6 +59,15 @@ export class JsonCustomEditor implements vscode.CustomTextEditorProvider {
             });
         };
 
+        vscode.workspace.onDidChangeConfiguration((e) => {
+            if (e.affectsConfiguration('workbench.colorTheme')) {
+                webviewPanel.webview.postMessage({
+                    type: 'theme_update',
+                    text: '',
+                });
+            }
+        });
+
         const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument((e) => {
             if (e.document.uri.toString() === document.uri.toString()) {
                 if (this.isApplyingEdit) {

@@ -2,6 +2,7 @@ var $_ = go.GraphObject.make;
 var processModelDiagram;
 var ProcessModeller = {};
 
+
 function uuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -35,6 +36,14 @@ function setOnChangeCallback(callback) {
         }
     );
 }
+
+var style = window.getComputedStyle(document.body)
+
+const editorBg = style.getPropertyValue('--vscode-editor-background');
+const editorFg = style.getPropertyValue('--vscode-editor-foreground');
+const sidebarBg = style.getPropertyValue('--vscode-sideBar-background');
+const sidebarBorder = style.getPropertyValue('--vscode-sideBar-border');
+
 
 
 processModelDiagram =
@@ -137,7 +146,7 @@ processModelDiagram.nodeTemplateMap.add("Start",
     $_(go.Node, "Auto",
         nodeStyle(),
         $_(go.Panel, "Auto",
-            getShape("Circle", "#a3e1d4", "#524d10")
+            getShape("Circle", sidebarBg, sidebarBorder)
         ),
         port1(), port2(), port3(), port4(),
         getSelectionAdornmentTemplate(),
@@ -157,7 +166,7 @@ processModelDiagram.nodeTemplateMap.add("Start",
 processModelDiagram.nodeTemplateMap.add("Task",
     $_(go.Node, "Auto", nodeStyle(true),
         $_(go.Panel, "Auto",
-            getShape("Rectangle", "#beddf2", "#524d10"),
+            getShape("Rectangle", sidebarBg, sidebarBorder),
             getTextBlock(),
         ),
         port1(), port2(), port3(), port4(),
@@ -179,8 +188,8 @@ processModelDiagram.nodeTemplateMap.add("XOR",
     $_(go.Node, "Auto",
         nodeStyle(),
         $_(go.Panel, "Auto",
-            getShape("Diamond", "#ffd8c4", "#524d10"),
-            getShape("XLine", "#000000", "#000000", 4, new go.Size(14, 14)),
+            getShape("Diamond", sidebarBg, sidebarBorder),
+            getShape("XLine", editorFg, editorFg, 4, new go.Size(14, 14)),
         ),
         port1(), port2(), port3(), port4(),
         getSelectionAdornmentTemplate(),
@@ -201,8 +210,8 @@ processModelDiagram.nodeTemplateMap.add("Fork",
     $_(go.Node, "Auto",
         nodeStyle(),
         $_(go.Panel, "Auto",
-            getShape("Diamond", "#ffd8c4", "#524d10"),
-            getShape("PlusLine", "#000000", "#000000", 4, new go.Size(20, 20))
+            getShape("Diamond", sidebarBg, sidebarBorder),
+            getShape("PlusLine", editorFg, editorFg, 4, new go.Size(20, 20))
         ),
         port1(), port2(), port3(), port4(),
         getSelectionAdornmentTemplate(),
@@ -223,9 +232,9 @@ processModelDiagram.nodeTemplateMap.add("Join",
     $_(go.Node, "Auto",
         nodeStyle(),
         $_(go.Panel, "Auto",
-            getShape("Diamond", "#ffd8c4", "#524d10"),
+            getShape("Diamond", sidebarBg, sidebarBorder),
             // getShape("SquareIBeam", "#000000", "#000000", 1, new go.Size(12, 12))
-            getShape("Rectangle", "#000000", "#000000", 1, new go.Size(12, 12))
+            getShape("Rectangle", editorFg, editorFg, 1, new go.Size(12, 12))
         ),
         port1(), port2(), port3(), port4(),
         getSelectionAdornmentTemplate(),
@@ -245,11 +254,11 @@ processModelDiagram.nodeTemplateMap.add("Join",
 processModelDiagram.nodeTemplateMap.add("Wait",
     $_(go.Node, "Auto", waitNodeStyle(),
         $_(go.Panel, "Auto",
-            getShape("Rectangle", "#beddf2", "#524d10"),
+            getShape("Rectangle", sidebarBg, sidebarBorder),
             $_(go.Panel, "Vertical",
                 $_(go.Panel, "Horizontal",
-                    getShape("Rectangle", "#000000", "#524d10", 1, new go.Size(4, 12)),
-                    getShape("Rectangle", "#000000", "#524d10", 1, new go.Size(4, 12))
+                    getShape("Rectangle", editorFg, editorFg, 1, new go.Size(4, 12)),
+                    getShape("Rectangle", editorFg, editorFg, 1, new go.Size(4, 12))
 
                 ),
                 getTextBlock()
@@ -274,8 +283,8 @@ processModelDiagram.nodeTemplateMap.add("End",
     $_(go.Node, "Auto",
         nodeStyle(),
         $_(go.Panel, "Auto",
-            getShape("Circle", "#a3e1d4", "#524d10"),
-            getShape("Circle", "#ff5a5a", "#000000", 2, new go.Size(16, 16)),
+            getShape("Circle", sidebarBg, sidebarBorder),
+            getShape("Circle", editorBg, sidebarBorder, 2, new go.Size(16, 16)),
         ),
         port1(), port2(), port3(), port4(),
         getSelectionAdornmentTemplate(),
@@ -456,7 +465,10 @@ function getTextBlock() {
                 maxSize: new go.Size(160, NaN),
                 wrap: go.TextBlock.WrapFit,
                 textAlign: "center",
-                editable: true
+                editable: true,
+                background: 'transparent',
+                stroke: editorFg
+
             },
             new go.Binding("text").makeTwoWay()
         );

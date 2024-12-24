@@ -9,6 +9,9 @@
             const parsedGraphObj = JSON.parse(message.text);
             loadModelDiagram(parsedGraphObj);
         }
+        else if(message.type === 'theme_update') {
+            console.log('theme updated');
+        } 
     });
 
     function saveProcessModel () {
